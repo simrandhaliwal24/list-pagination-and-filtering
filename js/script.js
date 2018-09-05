@@ -60,6 +60,48 @@ const appendPageLinks = () => {
 
 appendPageLinks();
 
+// show search div
+
+const showSearchDiv = () => {
+	let searchDiv = document.createElement("div");
+	searchDiv.className = "student-search";
+	let searchInput = document.createElement("input");
+	searchInput.placeholder = "Search for students...";
+	let searchButton = document.createElement("button");
+	searchButton.textContent = "Search";
+	searchDiv.appendChild(searchInput);
+	searchDiv.appendChild(searchButton);
+
+	let pageHeaderSearchDiv = document.querySelector(".page-header");
+	pageHeaderSearchDiv.appendChild(searchDiv);
+
+
+	// Event listener for search box functionality
+	// Array to hold number of hidden students
+	const searchResults = [];
+	searchButton.addEventListener('click', () => {
+	    let filter = searchInput.value.toLowerCase();
+	    searchResults.length = 0;
+	    for (let i = 0; i < eachStudent.length; i++) {
+	        if (eachStudent[i].innerHTML.indexOf(filter) > -1) {
+	            eachStudent[i].style.display = '';
+	            
+	        } else {
+	            eachStudent[i].style.display = 'none';
+	            searchResults.push(i);
+	        }   
+	    }
+	    // If all students are hidden, a 'no results' message is displayed
+	    if (searchResults.length === eachStudent.length) {
+	        noResultDiv.innerHTML = '<h1>No Results</h1>';
+	    } else {
+	        noResultDiv.innerHTML = ''; 
+	    }
+	});
+}
+
+showSearchDiv();
+
 // functionality to the pagination buttons so that they show and hide the correct items
 
 const listItemLinks = document.querySelectorAll(".pagination a");
